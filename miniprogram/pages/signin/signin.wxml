@@ -1,0 +1,17 @@
+<div class='bg'>
+  <image class="ico" src="../../images/books2.jpg"> </image>
+  <view>夜夜Python</view>
+  <form bindsubmit="get_signin">
+  <input bindblur="get_user_name_info" type="email" name="email" placeholder="QQ邮箱"/>
+  <input type="password" bindblur="get_password" name="password" placeholder="密码"/>
+  <input type="password" name="repassword" placeholder="再次输入密码"/>
+  <input class='yz' bindinput='maInput' bindblur="get_yan" type="text"  placeholder="  验证码"/>
+    <button  wx:if="{{show_ok_btn}}" bindtap="pub_ma" class="hqyz">{{text }}</button> 
+    <button wx:if="{{show_no_btn}}"  disabled="disabled" class="hqyz">{{text }}</button> 
+
+  <button class="sub" formType="submit">注册</button>
+  </form>
+  <navigator url="../helloword/helloword"><text class="signin">已经有账户？登录</text></navigator>
+  <navigator url="../forget_password/forget_password"><text class="forget_password">忘记密码？</text></navigator>
+</div>
+<view class='author'>版权1391405203@qq.com</view>

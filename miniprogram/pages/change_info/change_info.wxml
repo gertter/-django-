@@ -1,0 +1,101 @@
+<view class="bg_change" wx:if="{{ change_info }}">
+  <view class="head">
+  <view class="back">返回</view>
+  修改信息
+  <view class="fanish">完成</view>
+  </view>
+  <view class='form_person_change'>
+    <view class="info_change_bg" bindtap="get_head_img">
+      <view class="back">头像</view>
+      <view class="fanisht">》</view>
+    </view>
+    <view class="info_change_bg" bindtap="get_sign">
+      <view class="back">签名</view>
+      <view class="fanisht">》</view>
+    </view>
+    <view class="info_change_bg" bindtap="get_name">
+      <view class="back">昵称</view>
+      <view class="fanisht">》</view>
+    </view>
+  </view>
+  <!-- changename -->
+  <block wx:if="{{isShowConfirm_name}}">
+      <view class='toast-box'>
+        <view class='toastbg'></view>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>修改昵称</text>
+            </view>
+            <form bindsubmit="get_name_info">
+              <view class='toast-main'>
+                  <view class='toast-input'>
+                      <input type='text' placeholder='请输入昵称' value="{{person_name }}"  name="user_name"></input>
+                  </view>
+              </view>
+              <view class='toast-button'>
+                  <view class='button1'>
+                      <button catchtap='cancel'>取消</button>
+                  </view>
+                  <view class='button2'>
+                      <button form-type="submit" catchtap="cancel">确定</button>
+                  </view>
+              </view>
+            </form>
+        </view>
+    </view>
+  </block>
+  <!-- change_sign -->
+
+  <block wx:if="{{isShowConfirm_sign}}">
+      <view class='toast-box'>
+        <view class='toastbg'></view>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>修改签名</text>
+            </view>
+            <form bindsubmit="get_sign_info">
+              <view class='toast-main'>
+                  <view class='toast-input'>
+                  <textarea placeholder="输入您的签名！" name='user_sign'></textarea>
+                  </view>
+              </view>
+              <view class='toast-button'>
+                  <view class='button1'>
+                      <button catchtap='cancel'>取消</button>
+                  </view>
+                  <view class='button2'>
+                      <button form-type="submit" catchtap="cancel">确定</button>
+                  </view>
+              </view>
+            </form>
+        </view>
+    </view>
+  </block>
+  <block wx:if="{{isShowConfirm_head_img}}">
+      <view class='toast-box'>
+        <view class='toastbg'></view>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>修改头像</text>
+            </view>
+            <form bindsubmit="get_head_img_fun">
+              <view class='toast-main'>
+                  <view class='head_img' bindtap='upShopLogo'>
+                    <view class='img'><image src='{{user_img}}'></image></view>
+                  </view>
+                  <view>点击头像修改</view>
+              </view>
+              <view class='toast-button'>
+                  <view class='button1'>
+                      <button catchtap='cancel'>取消</button>
+                  </view>
+                  <view class='button2'>
+                      <button form-type="submit" catchtap="cancel">确定</button>
+                  </view>
+              </view>
+            </form>
+        </view>
+    </view>
+  </block>
+  
+</view>

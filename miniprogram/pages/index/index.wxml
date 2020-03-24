@@ -1,0 +1,453 @@
+<view class='main' wx:if="{{main_show}}">
+  <view class="head">夜夜Python</view>
+  <swiper class="swiper" indicator-dots="{{indicatorDots1}}"
+    autoplay="{{autoplay1}}"  interval="{{interval1}}" duration="{{duration}}">
+      <swiper-item wx:for="{{list_item}}" wx:key='index' wx:for-item="item"       classs="swiper-item">
+        <button class='find'>{{item.name}}</button>
+        <button class='find'>{{item.name1}}</button>
+        <button class='find'>{{item.name2}}</button>
+        <button class='find'>{{item.name3}}</button>
+      </swiper-item>
+    </swiper>
+    <swiper class="page-section" indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <swiper-item>
+          <image src="../../images/img1.jpg"></image>
+        </swiper-item>
+        <swiper-item>
+          <image src="../../images/img2.jpg"></image>
+        </swiper-item>
+        <swiper-item>
+          <image src="../../images/img3.jpg"></image>
+        </swiper-item>
+        <swiper-item>
+          <image src="../../images/img4.jpg"></image>
+        </swiper-item>
+    </swiper>
+    <view class='ip'>
+      <form>
+        <image class="search" src='../../images/search.png'></image>
+        <input type="text" placeholder="搜索课程"></input>
+      </form>
+    </view>
+    <view class="title_bg">
+      <view class="head_title"></view>
+      <view class="title">Web推荐路线</view>
+      <view class="recom">
+        <view>Html</view>
+        <view>Css</view>
+        <view>Js</view>
+        <view>Jquery</view>
+        <view>Vue</view>
+        <view>Django</view>
+      </view>
+   
+  </view>
+  <view class="title_bg">
+      <view class="head_title"></view>
+      <view class="title">人工智能</view>
+      <view class="recom">
+        <view>Pandas</view>
+        <view>Numpy</view>
+        <view>Matplotlib</view>
+        <view>SK_learn</view>
+        <view>Tencenflow</view>
+        <view>神经网络</view>
+      </view> 
+  </view>
+  <view class="more">更多课程...</view>
+  <view class="black"></view>
+</view>
+<!-- share -->
+<view class='share' wx:if="{{share_show}}">
+  <view class="head">
+  <view class="back" bindtap="get_video_show">返回</view>发帖<view class="my_pub" bindtap="get_my_pub">+</view>
+  </view>
+  <form bindsubmit="get_pub">
+    <view wx-if="{{my_pub}}" style="margin-top:30px;">
+        <view class='com-selectBox'>
+          <input style="width:82%" name='name' class="com-sContent com-sTxt" type="text" placeholder="视频名称"/>
+          <view class='com-sContent' bindtap='selectToggle'>
+              <view class='com-sTxt'>{{nowText}}</view>
+              <image src='../../images/down.jpg'  class='com-sImg'  animation="{{animationData}}"></image>
+          </view>
+          <view class='com-sList' wx:if="{{selectShow}}">
+              <view wx:for="{{propArray}}" data-index="{{index}}" wx:key='index' class='com-sItem' bindtap='setText'>{{item.text}}</view>
+          </view>
+          <view class="page-body-info">
+        <block wx:if="{{video_url === ''}}">
+          <view class="upload"  bindtap="chooseVideo">
+            <view class="com-sContent com-sTxt">选择上传的视频</view>
+          </view>
+        </block>
+        <block style="margin-top:10px;" wx:if="{{video_url != ''}}">
+          <video src="{{video_url}}" class="video_ex"></video>
+        </block>
+      </view>
+        <textarea name="intro"  class="com-sTxt com-sContent" placeholder="介绍您发布的视频"></textarea>
+        <checkbox-group  class="checkbox" bindchange="checkboxChange">
+          <label class="com-sTxt"><checkbox bindchange="checkboxChange" value="否"checked="{{agree}}"/>同意夜夜Python协议</label>
+        </checkbox-group>
+        <button style="width:90%;text-align:center;margin-left:0px;" class="com-sTxt com-sContent" formType="submit">点击上传</button>
+      </view>
+      <view class='black'></view>
+    </view>
+  </form>
+
+  <view wx:if="{{ viedo_list_show }}">
+    <view class="share_type" >
+      <button bindtap="get_all_pub" class="{{all_pub==true?'share_key':''}}">所有发帖</button>
+      <button bindtap="get_my_care" class="{{my_care==true?'share_key':''}}">我的关注</button>
+    </view>
+    <view class="share_info" wx:if="{{ all_pub }}">
+        <ul class="info_bg">
+          <view wx:for="{{all_pub_video}}" wx:for-item='item' wx:key='index'>
+              <view class="info_head">
+                  <image class="user_head_image" src="../../images/user_head.png"></image>
+                  <view class="user_text">
+                      <view class="user_name">{{item.user_name }}</view>
+                      <view class="user_pub_time">{{item.time}}</view>
+                  </view>
+                  <view class="user_change">
+                      <button class="care" data-user='{{item.user_id}}' catchtap="get_care_user">+关注</button>
+                  </view>
+              </view>
+              <view class="pub_text">{{item.introduce}}</view>
+              <view class="image_bg">
+                  <view class="section tc">
+                      <video id="myVideo" src="{{item.url}}" controls></video>
+                    <view class="info_interactive">
+                        <view class="interactive" data-user='{{item.user_id}}' data-pub="{{item.id}}" bindtap="get_share"><a href="#"><image src="../../images/shares.png"></image></a><font>{{item.share}}</font></view>
+                        <view class="interactive" data-pub="{{item.id}}" bindtap="get_comment_show"><a><image src="../../images/comment.png"></image></a><font>{{item.comments}}</font></view>
+                        <view bindtap="get_good" data-user='{{item.user_id}}' data-pub="{{item.id}}" class="interactive"><a><image src="../../images/good.png"></image></a><font>{{item.good}}</font></view>
+                    </view>
+                    </view>
+              </view>
+          </view>
+        </ul>
+    </view>
+
+
+
+    <view class="share_info" wx:if="{{ my_care }}">
+      <view class="none">暂无关注</view>
+        <ul class="info_bg">
+          <li wx:for="{{my_care_videl_list}}" wx:key='index' wx:for-item="item">
+              <view class="info_head">
+                  <image class="user_head_image" src="../../images/user_head.png"></image>
+                  <view class="user_text">
+                      <p class="user_name">{{item.user_name}}</p>
+                      <p class="user_pub_time">{{item.time}}</p>
+                  </view>
+      
+              </view>
+              <view class="pub_text">{{item.introduce}}</view>
+              <view class="image_bg">
+                  <view class="section tc">
+                      <video id="myVideo" src="{{item.url}}" danmu-list="{{danmuList}}"  controls></video>
+                    <view class="info_interactive">
+                       <view class="interactive" data-user='{{item.user_id}}' data-pub="{{item.id}}" bindtap="get_share"><a href="#"><image src="../../images/shares.png"></image></a><font>{{item.share}}</font></view>
+                        <view class="interactive" data-pub="{{item.id}}" bindtap="get_comment_show"><a><image src="../../images/comment.png"></image></a><font>{{item.comments}}</font></view>
+                        <view bindtap="get_good" data-user='{{item.user_id}}' data-pub="{{item.id}}" class="interactive"><a><image src="../../images/good.png"></image></a><font>{{item.good}}</font></view>
+                    </view>
+                    </view>
+              </view>
+          </li>
+        </ul>
+    </view>
+    <view class="black"></view>
+    <view class="comment_bg" wx:if="{{ comment }}">
+      <view class="totle_comment">{{all_comment_num}}条评论<view class="close_comment" bindtap="get_comment_hide">关闭</view></view>
+      <view class="all_commment" >
+        <view wx:for="{{user_comment_info}}" wx:for-item="item"  wx:key="index">
+            <view class="info_headt">
+              <image class="user_head_image" src="{{item.head_img}}"></image>
+              <view class="user_textp">
+                  <p class="user_name">{{item.name}}</p>
+                  <p class="user_pub_timep">{{item.time}}</p>
+              </view>
+          </view>
+          <view class="pub_text">{{item.info}}</view>
+        </view>
+      </view>
+      <form bindsubmit="get_pub_comment">
+        <view class="my_comment">
+          <input class="comment_info" name='word' type="text" placeholder="留下你的留言"></input>
+          <button formType='submit' class="comment_info_sub">发布</button>
+          </view>
+      </form>
+      </view>
+
+  </view>
+</view>
+
+<view class='colection' wx:if="{{colection_show}}">
+  <view class="head">收藏夹
+    <view-cover class="recom_cole" bindtap="get_my_recom">管理</view-cover>
+  </view>
+  <view  class="my_collection">
+    <view class="totle_c">总共收藏{{all_collection}}个视频</view>
+    <view>
+      <view class="all_v"  wx:for="{{ collection_video_list }}" wx:key='index'>
+      <label style="float:left;white:100%">
+        <checkbox-group data-index="{{item}}" data-index="{{index}}"  bindchange="checkboxChange1">
+          <checkbox value="是" checked="{{item.checked}}"/>{{item.title}}
+           <view class='c_time'>{{item.time}}</view>
+        </checkbox-group>
+      </label>
+
+        <view class="intro">{{item.introduce}}</view>
+        <video id="myVideo" class="c_video" enable-progress-gesture='true'  show-mute-btn='true' src="{{item.url}}" controls>
+        </video>
+      </view>
+    
+    </view>
+  </view>
+  <view class="black"></view>
+  <view class="recom_bg" wx:if="{{ myrecom }}">
+    <view>
+      
+        <checkbox bindtap="get_check_all" value="是" checked=""/>全选
+      <view class='c_time1' bindtap="get_delete_c">删除</view>
+        
+      
+    </view>
+  </view>
+</view>
+
+
+<!-- 个人中心 -->
+<view class='person' wx:if="{{person_show}}">
+    
+  <!-- py_care -->
+  <view class="all_vy" style="margin-top:30px;" wx:if='{{ my_care_show }}'>
+    <view class='head' style="margin-left:-10px;">
+        <view class="back" bindtap="get_main_person_show">返回</view>我发布的
+      </view>
+    <ul class="info_bg">
+        <li wx:for="{{my_care_user_list}}" wx:for-item='item' wx:key='index'>
+          <view class="info_head">
+              <image style="margin-top:5px;" class="user_head_image" src="{{item.head_img}}"></image>
+              <view class="user_text">
+                  <view class="user_name">{{item.name}}</view>
+                  <view class="user_pub_time">{{item.time}}</view>
+              </view>
+              <view class="user_change">
+                  <button class="care" bindtap="get_delete_my_care_user" data-index='{{item.id}}'>取消关注</button>
+              </view>
+          </view>
+      </li>
+    </ul>
+  </view>
+  <!-- 个人发布 -->
+   <block class='my_pub_video' wx:if="{{ py_pub_video_show }}">
+    <view class='head'>
+      <view class="back" bindtap="get_main_person_show">返回</view>我发布的
+      <view class="my_pub" bindtap="get_my_pub_person">+</view>
+    </view>
+     <view class="all_vy" wx:for="{{my_pub_video_list}}" wx:for-item='item' wx:key='index'>
+        <label>{{item.title}}<view class='c_time'><button class='bout' data-index='{{item.id}}' bindtap="delete_my_pub">删除</button></view></label>
+        <view class="intro">{{item.introduce}}</view>
+        <video id="myVideo" class="c_video" enable-progress-gesture='true'  show-mute-btn='true' src="{{item.url}}"  controls>
+        </video>
+        <view class="times">发布于：{{item.time}}</view>
+      </view>
+      <view class="black"></view>
+  </block>
+  <!-- 我要发布 -->
+  <view wx-if="{{my_pub_person_page_show}}" style="margin-top:30px;background:white;">
+      <view class='head'>
+        <view class="back" bindtap="get_my_pub_show">返回</view>发布
+      </view>
+      <form bindsubmit="get_pub">
+            <view class='com-selectBox'>
+              <input style="width:82%" name='name' class="com-sContent com-sTxt" type="text" placeholder="视频名称"/>
+              <view class='com-sContent' bindtap='selectToggle'>
+                  <view class='com-sTxt'>{{nowText}}</view>
+                  <image src='../../images/down.jpg'  class='com-sImg'  animation="{{animationData}}"></image>
+              </view>
+              <view class='com-sList' wx:if="{{selectShow}}">
+                  <view wx:for="{{propArray}}" data-index="{{index}}" wx:key='index' class='com-sItem' bindtap='setText'>{{item.text}}</view>
+              </view>
+              <view class="page-body-info">
+            <block wx:if="{{video_url === ''}}">
+              <view class="upload"  bindtap="chooseVideo">
+                <view class="com-sContent com-sTxt">选择上传的视频</view>
+              </view>
+            </block>
+            <block style="margin-top:10px;" wx:if="{{video_url != ''}}">
+              <video src="{{video_url}}" class="video_ex"></video>
+            </block>
+          </view>
+            <textarea name="intro"  class="com-sTxt com-sContent" placeholder="介绍您发布的视频"></textarea>
+            <checkbox-group  class="checkbox" bindchange="checkboxChange">
+              <label class="com-sTxt"><checkbox bindchange="checkboxChange" value="否"checked="{{agree}}"/>同意夜夜Python协议</label>
+            </checkbox-group>
+            <button style="width:90%;text-align:center;margin-left:0px;" class="com-sTxt com-sContent" formType="submit">点击上传</button>
+          </view>
+          <view class='black'></view>
+      </form>
+  </view>
+<!-- 个人中心基本显示 -->
+  <view wx:if="{{ main_person }}">
+    <view class="head head_bg_person">个人中心
+      <view-cover bindtap="get_settings" class="settings"><image src="../../images/settings.png"></image></view-cover>
+    </view>
+    <image style="position:fixed;top:29px;height:147px;opacity:0.8;" src="../../images/bg.png"></image>
+    <view class="head_person_t">
+      <image  src="{{ user_img }}"></image>
+      <view class="no_login">{{ person_name }}</view>
+      <view class="no_logins">{{person_sign }}</view>
+    </view>
+    <view class="care_bg">
+        <view class="care_num">关注{{ care }}</view>
+        <view class="person_fenge"></view>
+        <view class="like_num">粉丝{{care}}</view>
+      </view>
+      <view class="person_list">
+        <view class="info_person" bindtap="get_sign_fun_">
+          <image class="recom_ico" src="../../images/my_sign.png"></image>
+          <view class="recom_text">签到</view>
+          <view class="recom_num">{{sign_dao}}</view>
+        </view>
+          <view class="info_person" bindtap="get_py_pub_video_show">
+            <image class="recom_ico" src="../../images/my_pub.png"></image>
+            <view class="recom_text">我的发布</view>
+            <view class="recom_num">{{my_pub}}</view>
+          </view>
+        <view class="info_person" bindtap="get_my_care_show">
+          <image class="recom_ico" src="../../images/my_care.png"></image>
+          <view class="recom_text">我关注的</view>
+          <view class="recom_num"></view>
+        </view>
+      </view>
+      <view class="change_set" wx:if="{{ setting }}">
+          <view bindtap="get_change">修改资料</view>
+          <view  class="set_text">退出登陆</view>
+      </view>
+  </view>
+  <view class="bg_change" wx:if="{{ change_info }}">
+  <view class="head">
+  <view class="back" bindtap="get_main_person">返回</view>修改信息
+  <view class="fanish" bindtap="get_change_info">完成</view>
+  </view>
+  <view class='form_person_change'>
+    <view class="info_change_bg" bindtap="get_head_img">
+      <view class="back">头像</view>
+      <view class="fanisht">》</view>
+    </view>
+    <view class="info_change_bg" bindtap="get_sign">
+      <view class="back">签名</view>
+      <view class="fanisht">》</view>
+    </view>
+    <view class="info_change_bg" bindtap="get_name">
+      <view class="back">昵称</view>
+      <view class="fanisht">》</view>
+    </view>
+  </view>
+  <!-- changename -->
+  <block wx:if="{{isShowConfirm_name}}">
+      <view class='toast-box'>
+        <view class='toastbg'></view>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>修改昵称</text>
+            </view>
+            <form bindsubmit="get_name_info">
+              <view class='toast-main'>
+                  <view class='toast-input'>
+                      <input type='text' placeholder="{{person_name }}"   name="user_name"></input>
+                  </view>
+              </view>
+              <view class='toast-button'>
+                  <view class='button1'>
+                      <button catchtap='cancel'>取消</button>
+                  </view>
+                  <view class='button2'>
+                      <button form-type="submit" catchtap="cancel">确定</button>
+                  </view>
+              </view>
+            </form>
+        </view>
+    </view>
+  </block>
+  <!-- change_sign -->
+
+  <block wx:if="{{isShowConfirm_sign}}">
+      <view class='toast-box'>
+        <view class='toastbg'></view>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>修改签名</text>
+            </view>
+            <form bindsubmit="get_sign_info">
+              <view class='toast-main'>
+                  <view class='toast-input'>
+                  <textarea placeholder="输入您的签名！" name='user_sign'></textarea>
+                  </view>
+              </view>
+              <view class='toast-button'>
+                  <view class='button1'>
+                      <button catchtap='cancel'>取消</button>
+                  </view>
+                  <view class='button2'>
+                      <button form-type="submit" catchtap="cancel">确定</button>
+                  </view>
+              </view>
+            </form>
+        </view>
+    </view>
+  </block>
+  <!-- head -->
+  <block wx:if="{{isShowConfirm_head_img}}">
+      <view class='toast-box'>
+        <view class='showToast'>
+            <view class='toast-title'>
+                <text>修改头像</text>
+            </view>
+            <form>
+              <view class='toast-main'>
+                  <view class='head_img' bindtap='upShopLogo'>
+                    <view class='img'><image src='{{user_img}}'></image></view>
+                  </view>
+                  <view>点击头像修改</view>
+              </view>
+              <view class='toast-button'>
+                  <view class='button1'>
+                      <button catchtap='cancel'>取消</button>
+                  </view>
+                  <view class='button2'>
+                      <button form-type="submit" catchtap="cancel">确定</button>
+                  </view>
+              </view>
+            </form>
+        </view>
+    </view>
+  </block>
+
+
+</view>
+</view>
+
+
+<!-- index -->
+<view class='index'>
+<ul>
+  <li bindtap="mainclick" class="{{main_show==true?'key':''}}">
+    <p><image src="../../images/main.png"></image></p><br/>
+    <p>首页</p>
+  </li>
+ <li bindtap="shareclick" class="{{share_show==true?'key':''}}">
+    <p><image src="../../images/share.png"></image></p><br/>
+    <p>分享</p>
+  </li>
+<li bindtap="colectionclick" class="{{colection_show==true?'key':''}}">
+  <p><image src="../../images/colection.png"></image></p><br/>
+  <p>收藏夹</p>
+</li>
+<li bindtap="personclick" class="{{person_show==true?'key':''}}">
+    <p><image src="../../images/person.png"></image></p><br/>
+    <p>我的</p>
+  </li>
+</ul>
+</view>

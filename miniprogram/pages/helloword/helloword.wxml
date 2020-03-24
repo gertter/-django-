@@ -1,0 +1,12 @@
+<div class='bg'>
+  <image  class="ico" src="../../images/books2.jpg"> </image>
+  <view>夜夜Python</view>
+  <form bindsubmit="get_login">
+    <input type="text" bindblur="get_user_name_info" placeholder="  QQ邮箱" name="email"/>
+    <input type="password" placeholder="  密码" name="password"/>
+    <button formType="submit">登录</button>
+  </form>
+  <navigator url="../signin/signin"><text class="signin">没有账户？注册</text></navigator>
+  <navigator url="../forget_password/forget_password"><text class="forget_password">忘记密码？</text></navigator>
+</div>
+<view class='author'>版权1391405203@qq.com</view>
